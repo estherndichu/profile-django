@@ -1,15 +1,20 @@
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+{% for image in images %}
 <div class="col-sm-12 col-md-8 offset-md-2 mt-5 p-0 post-container">
     <a href='/' style='color: inherit;text-decoration: inherit;'>
         <div class="media pt-3 pl-3 pb-1">
-            <img class="mr-3 rounded-circle" height="35" src="{{ post.profile.photo.url }}"
-                alt="{{ post.user.username }}">
+            <img class="mr-3 rounded-circle" height="35" src="{{ image.profile.photo.url }}"
+                alt="{{ image.user.username }}">
             <div class="media-body">
-                <p style="margin-top: 5px;">{{ post.profile.user.username }}</p>
+                <p style="margin-top: 5px;">{{ image.profile.user.username }}</p>
             </div>
         </div>
     </a>
     <a href=''>
-        <img style="width: 100%;" src="{{ post.image.url }}" alt="{{ post.name }}">
+        <img style="width: 100%;" src="{{ image.image.url }}" alt="{{ image.name }}">
     </a>
     <p class="mt-1 ml-2">
         <a href="" style="color: #000; font-size: 20px;">
@@ -17,6 +22,8 @@
         </a>
     </p>
     <p class="ml-2 mt-0 mb-2">
-        <b>{{ post.name }}</b> -
+        <b>{{ image.name }}</b> -
     </p>
 </div>
+{% endfor %}
+{% endblock %}

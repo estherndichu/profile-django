@@ -1,11 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, Image, Comments
+from .models import Profile, Post
 
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Image
+        model = Post
         fields = ('image', 'caption')
 

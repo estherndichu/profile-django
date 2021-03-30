@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Image,Comments,Profile
+from .models import Post ,Profile
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 from django.contrib.auth.models import User
@@ -7,7 +7,7 @@ from django.contrib.auth import logout,authenticate
 from django.http import HttpResponseRedirect
 
 def index(request):
-    images = Image.objects.all()
+    images = Post.objects.all()
     users = User.objects.exclude(id=request.user.id)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)

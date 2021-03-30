@@ -7,24 +7,19 @@ from cloudinary.models import CloudinaryField
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     photo = CloudinaryField('photo')
-    bio = models.CharField(max_length=500)
+    bio = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.bio
+        return self.user.username
 
-class Comments(models.Model):
-    comment = models.CharField(max_length=500)
 
-    def __str__(self):
-        return self.comment
-
-class Image(models.Model):
+class Post(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     image = CloudinaryField('image')
     name = models.CharField(max_length=50)
     caption = models.CharField(max_length=100)
-    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
     likes = models.IntegerField(default=0)
-    comments = models.ManyToManyField(Comments)
+    comment = models.CharField(max_length=150)
 
     def __str__(self):
         return f"{self.name} - {self.caption}"

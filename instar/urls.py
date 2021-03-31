@@ -4,7 +4,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns=[
-    url('', views.index,name='index'),
+    url('^$', views.index,name='index'),
     url("^post/(\d+)", views.post, name="post"),
     url("^like/(\d+)", views.like, name="like"),
 ]

@@ -20,10 +20,10 @@
                 </div>
                 <img src="{{post.image.url}}" alt="image" class="img-fluid">
                 <div class="card-body">
-                    <a href="">
+                    <a href="{%url 'like' post.id%}">
                         <i class="far fa-heart fa-lg" style="font-size: 30px; margin-right:10px; color:#d82626"></i>
                     </a>
-                    <a href="">
+                    <a href="{%url 'post' post.id%}">
                         <i class="far fa-comment fa-lg" style="font-size: 30px;"></i>
                     </a>
                 </div>

@@ -5,6 +5,7 @@ from .forms import PostForm
 from django.contrib.auth.models import User
 from django.contrib.auth import logout,authenticate
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def index(request):
     posts = Post.objects.all()[::-1]

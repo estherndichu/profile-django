@@ -1,0 +1,24 @@
+{%extends "instar/base.html"%} {%load bootstrap4%} {%block content%}
+
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <img src="{{post.image.url}}" alt="" class="img-fluid">
+            </div>
+
+        </div>
+        <div class="col-lg-4">
+            <div style="display: flex;">
+                <img src="{{post.profile.user.photo.url}}" alt="profile pic" style="border-radius: 50%;" width="32"
+                    height="32" class="img-fluid">
+                <h5 class="card-title" style="padding-top: 10px; margin-left:10px">{{post.profile.username}}
+                </h5>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{%endblock%}

@@ -28,6 +28,4 @@ def profile(request, id):
     user = User.objects.get(id=id)
     profile = Profile.objects.get(user_id=user)
     posts = Post.objects.filter(profile__id=id)[::-1]
-    return render(request, "instar/profile.html", context={"user":user,
-                                                             "profile":profile,
-                                                             "posts":posts})
+    return render(request, "instar/profile.html",{"user":user, "profile":profile,"posts":posts})

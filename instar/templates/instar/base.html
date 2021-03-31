@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +14,8 @@
 <body>
 
     {% include "nav.html" %}
-    <span class="container"></span>
-    <div class="container mt-5">
-        {% block container %}
+        {% block content %}
         {% endblock%}
-    </div>
 
     <!--JS libraries-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

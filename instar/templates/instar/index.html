@@ -1,29 +1,44 @@
+{% extends 'instar/base.html' %}
 {% load bootstrap4 %}
-{% load static %}
 
 {% block content %}
-{% for image in images %}
-<div class="col-sm-12 col-md-8 offset-md-2 mt-5 p-0 post-container">
-    <a href='/' style='color: inherit;text-decoration: inherit;'>
-        <div class="media pt-3 pl-3 pb-1">
-            <img class="mr-3 rounded-circle" height="35" src="{{ image.profile.photo.url }}"
-                alt="{{ image.user.username }}">
-            <div class="media-body">
-                <p style="margin-top: 5px;">{{ image.profile.user.username }}</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+
+            {%for post in posts%}
+            <div class="card">
+                <div class="card-body" style="display: flex;">
+                    <img src="{{post.image.url}}" alt="profile pic" style="border-radius: 60%;" width="40" height="40"
+                        class="img-fluid">
+                    <a href="" style="color: #333;">
+                        <h5 class="card-title" style="padding-top: 10px; margin-left:10px">
+                            {{post.profile.user.username}}
+                        </h5>
+                    </a>
+                </div>
+                <img src="{{post.image.url}}" alt="image" class="img-fluid">
+                <div class="card-body">
+                    <a href="">
+                        <i class="far fa-heart fa-lg" style="font-size: 30px; margin-right:10px; color:#d82626"></i>
+                    </a>
+                    <a href="">
+                        <i class="far fa-comment fa-lg" style="font-size: 30px;"></i>
+                    </a>
+                </div>
+                <p class="card-text ml-4" style="font-weight: bolder;">{{post.likes}} likes</p>
+                <div class="ml-4 mb-3">
+                    <p class="card-text">{{post.caption}}</p>
+                </div>
             </div>
+            {%endfor%}
+
+
         </div>
-    </a>
-    <a href=''>
-        <img style="width: 100%;" src="{{ image.image.url }}" alt="{{ image.name }}">
-    </a>
-    <p class="mt-1 ml-2">
-        <a href="" style="color: #000; font-size: 20px;">
-            <i class="far fa-heart"></i>
-        </a>
-    </p>
-    <p class="ml-2 mt-0 mb-2">
-        <b>{{ image.name }}</b> -
-    </p>
+        <div class="col-md-3">
+        </div>
+    </div>
 </div>
-{% endfor %}
-{% endblock %}
+
+{%endblock%}

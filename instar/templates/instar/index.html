@@ -8,30 +8,18 @@
         <div class="col-md-6">
 
             {%for post in posts%}
-            <div class="card">
-                <div class="card-body" style="display: flex;">
-                    <img src="{{post.image.url}}" alt="profile pic" style="border-radius: 60%;" width="40" height="40"
-                        class="img-fluid">
-                    <a href="" style="color: #333;">
-                        <h5 class="card-title" style="padding-top: 10px; margin-left:10px">
-                            {{post.profile.user.username}}
-                        </h5>
-                    </a>
-                </div>
-                <img src="{{post.image.url}}" alt="image" class="img-fluid">
-                <div class="card-body">
-                    <a href="{%url 'like' post.id%}">
-                        <i class="far fa-heart fa-lg" style="font-size: 30px; margin-right:10px; color:#d82626"></i>
-                    </a>
-                    <a href="{%url 'post' post.id%}">
-                        <i class="far fa-comment fa-lg" style="font-size: 30px;"></i>
-                    </a>
-                </div>
-                <p class="card-text ml-4" style="font-weight: bolder;">{{post.likes}} likes</p>
-                <div class="ml-4 mb-3">
-                    <p class="card-text">{{post.caption}}</p>
-                </div>
+            <div class="card-body" style="display: flex;">
+                <img src="{{post.image.url}}" alt="profile pic" style="border-radius: 60%;" width="40" height="40"
+                    class="img-fluid">
+                <a href="" style="color: #333;">
+                    <h5 class="card-title" style="padding-top: 10px; margin-left:10px">
+                        {{post.profile.user.username}}
+                    </h5>
+                </a>
             </div>
+            <a href="{%url 'post' post.id %}">
+                <img src="{{post.image.url}}" alt="image" class="img-fluid">
+            </a>
             {%endfor%}
 
 

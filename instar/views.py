@@ -21,4 +21,6 @@ def like(request, id):
     post = Post.objects.get(id = id)
     post.likes += 1
     post.save()
-    return HttpResponseRedirect(reverse("index"))     
+    return HttpResponseRedirect(reverse("index"))  
+    
+       

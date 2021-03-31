@@ -10,3 +10,8 @@ def index(request):
     posts = Post.objects.all()[::-1]
 
     return render(request, "instar/index.html", {"posts":posts})
+
+def post(request,id):
+    post = Post.objects.get(id=id)
+
+    return render(request,'instar/post.html', {'post':post})    

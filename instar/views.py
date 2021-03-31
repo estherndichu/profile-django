@@ -14,4 +14,10 @@ def index(request):
 def post(request,id):
     post = Post.objects.get(id=id)
 
-    return render(request,'instar/post.html', {'post':post})    
+    return render(request,'instar/post.html', {'post':post})   
+
+def like(request, id):
+    post = Post.objects.get(id = id)
+    post.likes += 1
+    post.save()
+    return HttpResponseRedirect(reverse("index"))     

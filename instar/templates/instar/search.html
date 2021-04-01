@@ -27,14 +27,15 @@
 
                 <h1 class="profile-user-name">{{user.username}}</h1>
 
+
             </div>
 
             <div class="profile-stats">
 
                 <ul>
-                    <li><span class="profile-stat-count">{{posts|length}}</span> posts</li>
-                    <li><span class="profile-stat-count">{{profile.followers|length}}</span> followers</li>
-                    <li><span class="profile-stat-count">{{profile.following|length}}</span> following</li>
+                    <span class="profile-stat-count">{{posts|length}}</span> posts <br><br>
+                    <span class="profile-stat-count">{{profile.followers|length}}</span> followers <br><br>
+                    <span class="profile-stat-count">{{profile.following|length}}</span> following
                 </ul>
 
             </div>

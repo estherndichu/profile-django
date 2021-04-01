@@ -3,15 +3,43 @@ from .models import Post, Profile
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 from django.contrib.auth.models import User
-from django.contrib.auth import logout,authenticate
+from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 @login_required(login_url='/accounts/login/')
 def index(request):
+    current_user = request.user
+    print(current_user)
+    current_profile = UserProfile.objects.get(user_id=current_user)
     posts = Post.objects.all()[::-1]
+    comments = Comment.objects.all()
 
-    return render(request, "instar/index.html", {"posts":posts})
+    if request.method == "POST":
+        post_form = PostForm(request.POST, request.FILES)
+
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
+
+            post.profile = current_user
+            post.user_profile = current_profile
+
+            post.save()
+            post_form = PostForm()
+            return HttpResponseRedirect(reverse("index"))
+
+    else:
+        post_form = PostForm()
+
+    
+
+    return render(request, "instar/index.html",{"posts":posts,"current_user":current_user,"current_profile":current_profile,"post_form":post_form,"comments":comments})
+
+# @login_required
+# def index(request):
+#     posts = Post.objects.all()[::-1]
+
+#     return render(request, "instar/index.html", {"posts":posts})
 
 def post(request,id):
     post = Post.objects.get(id=id)
@@ -40,3 +68,8 @@ def search(request):
     else:
         user = User.objects.all()
         return render (request,'instar/search.html',{"user":user})   
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))

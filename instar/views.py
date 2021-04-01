@@ -19,13 +19,12 @@ def post(request,id):
 
 def like(request, id):
     post = Post.objects.get(id = id)
-    post.likes += 1
+    post.likes +=1
     post.save()
     return HttpResponseRedirect(reverse("index"))  
     
 
 def profile(request, id):
-    user = User.objects.get(id=id)
-    profile = Profile.objects.get(user_id=user)
+    profile = Profile.objects.get(id=id)
     posts = Post.objects.filter(profile__id=id)[::-1]
-    return render(request, "instar/profile.html",{"user":user, "profile":profile,"posts":posts})
+    return render(request, "instar/profile.html",{"profile":profile,"posts":posts})

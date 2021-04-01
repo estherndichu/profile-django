@@ -8,6 +8,7 @@ urlpatterns=[
     url("^post/(\d+)", views.post, name="post"),
     url("^like/(\d+)", views.like, name="like"),
     url("^profile/(\d+)", views.profile, name="profile"),
+    
 ]
 
 if settings.DEBUG:

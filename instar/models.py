@@ -13,7 +13,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-     @classmethod
+    @classmethod
     def search_by_user(cls,search_term):
         instar = cls.objects.filter(user__icontains=search_term)
         return instar   

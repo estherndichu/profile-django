@@ -28,3 +28,14 @@ def profile(request, id):
     profile = Profile.objects.get(id=id)
     posts = Post.objects.filter(profile__id=id)[::-1]
     return render(request, "instar/profile.html",{"profile":profile,"posts":posts})
+
+def search(request):
+    if 'profile' in request.GET and request.GET['profile']:
+        search_term = request.GET.get('profile')
+        searched_user = Profile.search_by_user(search_term)
+        user = User.objects.all()
+        return render(request,'instar/search.html',{"user":user,"profile":searched_user})
+
+    else:
+        user = User.objects.all()
+        return render (request,'instar/search.html',{"user":user})   

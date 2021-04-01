@@ -22,5 +22,7 @@ urlpatterns = [
     path('',include('instar.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('logout/', views.logout, {"next_page": '/'}), 
+    path('logout/', views.user_logout, name='user_logout'),
+    path('register/',views.register,name='register'),
+    path('user_login/',views.user_login,name='user_login'),
 ]

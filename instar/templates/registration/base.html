@@ -1,44 +1,30 @@
-{% load bootstrap4 %}
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Sign Up| Login</title>
-
-  {% block styles %}
-    {% bootstrap_css %}
-  {% endblock %}
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sign Up | Login</title>
+  {%block styles%}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <link href="https://fonts.googleapis.com/css?family=Cookie|Lato&display=swap" rel="stylesheet">
+  {%endblock%}
+  {{ profile_form.media }}
 </head>
 
-<body>
+<body class="text-center">
 
-  {% block content %} 
-  <body class="h-100">
-
-    <div class="container h-100">
-        <div class="row h-100 justify-content-center align-items-center">
-            <div class="col-sm-12 col-md-5 col-lg-5 pt-2 pl-5 pr-5 pb-5 border-info rounded" id="auth-container">
-
-                <img src='{% static "img/instar.jpg" %}' class="img-fluid rounded mt-2 mx-auto d-block pb-4" style="max-width: 60%;">
-
-                {% block container %}{% endblock%}
-
-            </div>
-        </div>
-    </div>
+  {%block content%}
   {%endblock%}
 
+  {%block scripts%}
 
-  {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    {% bootstrap_javascript %}
-  {% endblock %}
-
+  {%endblock%}
 </body>
 
 </html>

@@ -11,9 +11,8 @@ from django.urls import reverse
 def index(request):
     current_user = request.user
     print(current_user)
-    current_profile = UserProfile.objects.get(user_id=current_user)
+    current_profile = Profile.objects.get(user_id=current_user)
     posts = Post.objects.all()[::-1]
-    comments = Comment.objects.all()
 
     if request.method == "POST":
         post_form = PostForm(request.POST, request.FILES)
@@ -33,13 +32,8 @@ def index(request):
 
     
 
-    return render(request, "instar/index.html",{"posts":posts,"current_user":current_user,"current_profile":current_profile,"post_form":post_form,"comments":comments})
+    return render(request, "instar/index.html",{"posts":posts,"current_user":current_user,"current_profile":current_profile,"post_form":post_form})
 
-# @login_required
-# def index(request):
-#     posts = Post.objects.all()[::-1]
-
-#     return render(request, "instar/index.html", {"posts":posts})
 
 def post(request,id):
     post = Post.objects.get(id=id)

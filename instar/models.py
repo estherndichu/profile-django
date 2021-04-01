@@ -13,6 +13,11 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+     @classmethod
+    def search_by_user(cls,search_term):
+        instar = cls.objects.filter(user__icontains=search_term)
+        return instar   
+
 def create_profile(sender,instance, created, **kwargs):
     if created:
         Profile.objects.create(user = instance)
@@ -30,4 +35,3 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.name} - {self.caption}"
 
-        

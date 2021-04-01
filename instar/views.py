@@ -63,7 +63,3 @@ def search(request):
         user = User.objects.all()
         return render (request,'instar/search.html',{"user":user})   
 
-@login_required
-def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect(reverse("index"))

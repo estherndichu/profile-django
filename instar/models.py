@@ -31,13 +31,27 @@ class Post(models.Model):
     name = models.CharField(max_length=50)
     caption = models.CharField(max_length=100)
     likes = models.IntegerField(default=0)
-    comment = models.CharField(max_length=150)
+    comments = models.CharField(max_length=150)
+
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
 
     def __str__(self):
         return f"{self.name} - {self.caption}"
 
 class Comment(models.Model):
     comment = models.CharField(max_length=256)
+    post =models.ForeignKey(Post,on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile,on_delete= models.CASCADE)
 
     def __str__(self):
         return self.comment
+
+class Follower(models.Model):
+    follower = models.ForeignKey(Profile,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.follower} Follow'     

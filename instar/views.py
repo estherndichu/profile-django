@@ -1,39 +1,30 @@
 from django.shortcuts import render,redirect
 from .models import Post, Profile
 from django.contrib.auth.decorators import login_required
-from .forms import PostForm, UserForm, ProfileForm
+from .forms import PostForm, ProfileForm
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def index(request):
-    # current_user = request.user
-    # print(current_user)
-    # current_profile = Profile.objects.get(user_id=current_user)
-    # posts = Post.objects.all()[::-1]
+    users = User.objects.exclude(id=request.user.id)
+    posts = Post.objects.all()[::-1]
 
-    # if request.method == "POST":
-    #     post_form = PostForm(request.POST, request.FILES)
+    if request.method == "POST":
+        post_form = PostForm(request.POST, request.FILES)
 
-    #     if post_form.is_valid():
-    #         post = post_form.save(commit=False)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
 
-    #         post.profile = current_user
-    #         post.user_profile = current_profile
+            post.user = request.user.profile
 
-    #         post.save()
-    #         post_form = PostForm()
-    #         return HttpResponseRedirect(reverse("index"))
-
-    # else:
-    #     post_form = PostForm()
-
-    
-
-    # return render(request, "instar/index.html",{"posts":posts,"current_user":current_user,"current_profile":current_profile,"post_form":post_form})
-    return render(request,'instar/index.html')
+            post.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = PostForm()
+    return render(request, "instar/index.html",{"posts":posts,"form":form, "users":users})
 
 
 def post(request,id):
@@ -47,22 +38,24 @@ def like(request, id):
     post.save()
     return HttpResponseRedirect(reverse("index"))  
     
-
+@login_required()
 def profile(request, id):
-    profile = Profile.objects.get(id=id)
+    user = User.objects.get(id=id)
+    profile = Profile.objects.get(user_id=user)
     posts = Post.objects.filter(profile__id=id)[::-1]
-    return render(request, "instar/profile.html",{"profile":profile,"posts":posts})
+    return render(request, "instar/profile.html",{"user":user, "profile":profile, "posts":posts})
 
 def search(request):
-    if 'profile' in request.GET and request.GET['profile']:
-        search_term = request.GET.get('profile')
-        searched_user = Profile.search_by_user(search_term)
-        user = User.objects.all()
-        return render(request,'instar/search.html',{"user":user,"profile":searched_user})
+    if 'search_user' in request.GET and request.GET['search_user']:
+        name = request.GET.get('search_user')
+        results = Profile.search_by_user(name)
+        message = f"{name}"
 
-    else:
-        user = User.objects.all()
-        return render (request,'instar/search.html',{"user":user})   
+        return render(request,'instar/search.html',{"results":results,"message":message})
+
+    else: 
+        message = f"You haven't searched yet"
+        return render (request,'instar/search.html',{"message":message})
 
 def user_login(request):
     
@@ -92,31 +85,16 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse("user_login"))
 
+def follow(request, to_follow):
+    if request.method == 'GET':
+        user_profile3 = Profile.objects.get(pk=to_follow)
+        follow_s = Follow(follower=request.user.profile, followed=user_profile3)
+        follow_s.save()
+        return redirect('profile', user_profile3.user.username)
 
-def register(request):
-    registered = False
-    
-
-    if request.method == "POST":
-        user_form = UserForm(request.POST)
-        
-        if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            user_profile = Profile()
-            user_profile.user = user
-            user_profile.save()
-            registered = True
-            
-            return HttpResponseRedirect(reverse("user_login"))
-
-        else:
-            pass
-
-    else:
-        user_form = UserForm()
-        
-
-    return render(request, "registration/register.html",{"user_form":user_form,"registered":registered})
+def unfollow(request, to_unfollow):
+    if request.method == 'GET':
+        user_profile2 = Profile.objects.get(pk=to_unfollow)
+        unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=user_profile2)
+        unfollow_d.delete()
+        return redirect('profile', user_profile2.user.username)        

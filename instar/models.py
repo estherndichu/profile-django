@@ -15,9 +15,8 @@ class Profile(models.Model):
         return self.user.username
 
     @classmethod
-    def search_by_user(cls,search_term):
-        instar = cls.objects.filter(user__icontains=search_term)
-        return instar   
+    def search_by_user(cls,name):
+        return cls.objects.filter(user__username__icontains=name).all()
 
 def create_profile(sender,instance, created, **kwargs):
     if created:

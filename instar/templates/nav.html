@@ -36,6 +36,7 @@
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link" href="{%url 'user_logout'%}" style="color: #333;">Log Out</a>
+                    <a class="nav-link" href="{%url 'profile' user.id%}" style="color: #333;">{{profile.user.username}}</a>
                 </li>
             </ul>
         </span>

@@ -31,8 +31,6 @@ class Post(models.Model):
     name = models.CharField(max_length=50)
     caption = models.CharField(max_length=100)
     likes = models.IntegerField(default=0)
-    comments = models.CharField(max_length=150)
-
     def save_post(self):
         self.save()
 

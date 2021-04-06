@@ -1,14 +1,14 @@
 {% load static %}
-{% load crispy_forms_tags %}
-<div class="navbar fixed-top bg-white">
+<div class="navbar bg-light">
     <nav class="container">
         <span class="navbar-brand mb-0 h1">
             <div class="logo d-none d-sm-block">
-                <a class="navbar-brand pr-5" style="border-right: 1px solid #efefef;" href='/'>
-                    <img src='{% static "img/instar.jpg" %}' height="45" class="d-inline-block align-top" />
+                <a class="navbar-brand pr-5" style="border-right: 1px solid #a7a3a3;" href='/'>
+                    <img src='{% static "img/instar.jpg" %}' height="45" class="d-inline-block align-top" /> Instar
                 </a>
             </div>
         </span>
+        
         <form class="mb-0 h1 ml-auto mr-auto" action="{%url 'search'%}" method="GET">
             <input name="search_user" autocomplete="off" class="form-control d-none d-md-block" placeholder="Search">
         </form>
@@ -25,36 +25,6 @@
                     </span>
                 </div>
                 {% endif %}
-            </div>
-        </span>
-        <span class="pull-right mr-5">
-            <div class="logo d-none d-sm-block">
-                <button class="btn btn-sm btn-outline-primary ml-4 mb-3" data-toggle="modal" data-target="#imageUpload">
-                    Add Post
-                </button>
-                <div class="modal fade" id="imageUpload" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Image Upload</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" method="post" enctype="multipart/form-data" novalidate>
-                                    {% csrf_token %}
-                                    {{ form|crispy }}
-                                    <button class="btn btn-sm btn-success">Upload</button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                
             </div>
         </span>
         <span class="pull-right mr-5">

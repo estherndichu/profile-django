@@ -1,16 +1,18 @@
 from django.shortcuts import render,redirect
-from .models import Post, Profile
+from .models import Post, Profile, Comment
 from django.contrib.auth.decorators import login_required
-from .forms import PostForm, ProfileForm
+from .forms import PostForm, ProfileForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def index(request):
-    users = User.objects.exclude(id=request.user.id)
+    current_user = request.user.profile
     posts = Post.objects.all()[::-1]
+    comments = Comment.objects.all()
+    users = User.objects.exclude(id=request.user.id)
 
     if request.method == "POST":
         post_form = PostForm(request.POST, request.FILES)
@@ -18,19 +20,38 @@ def index(request):
         if post_form.is_valid():
             post = post_form.save(commit=False)
 
-            post.user = request.user.profile
+            post.profile = current_user
 
             post.save()
-            return HttpResponseRedirect(request.path_info)
+            post_form = PostForm()
+            return HttpResponseRedirect(reverse("index"))
+
     else:
-        form = PostForm()
-    return render(request, "instar/index.html",{"posts":posts,"form":form, "users":users})
+        post_form = PostForm()
 
+    return render(request, "instar/index.html", context={"posts":posts,"current_user":current_user,"post_form":post_form,"comments":comments})
 
-def post(request,id):
-    post = Post.objects.get(id=id)
+def post(request, id):
+    post = Post.objects.get(id = id)
+    comments = Comment.objects.filter(post__id=id)
+    current_user = request.user
+    current_profile = Profile.objects.get(post=id)
 
-    return render(request,'instar/post.html', {'post':post})   
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = current_user
+            comment.post = post
+            comment.save()
+            comment_form = CommentForm()
+            return redirect("post", post.id)
+
+    else:
+        comment_form = CommentForm()
+
+    return render(request, "instar/post.html", context={"post":post,"current_user":current_user,"current_profile":current_profile,"comment_form":comment_form,"comments":comments,}) 
 
 def like(request, id):
     post = Post.objects.get(id = id)

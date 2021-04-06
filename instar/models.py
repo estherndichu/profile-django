@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     photo = CloudinaryField('profile')
-    bio = models.CharField(max_length=200)
+    bio = models.CharField(max_length=200, blank=True)
     followers = models.ManyToManyField(User, related_name="followers", blank=True)
 
     def __str__(self):
@@ -27,8 +27,8 @@ post_save.connect(create_profile, sender = User)
 class Post(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     image = CloudinaryField('post')
-    name = models.CharField(max_length=50)
-    caption = models.CharField(max_length=100)
+    name = models.CharField(max_length=50, blank=True)
+    caption = models.CharField(max_length=100, blank=True)
     likes = models.IntegerField(default=0)
     def save_post(self):
         self.save()

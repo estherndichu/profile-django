@@ -21,10 +21,17 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ("first_name", "last_name", "username", "email", "password",)
 
-class ProfileForm(forms.ModelForm):
+class UpdateUserForm(forms.ModelForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
+class UpdateUserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ("photo",)
+        fields = ["photo","bio",]
 
 class CommentForm(forms.ModelForm):
     comment = forms.CharField(label=False, widget=forms.TextInput(attrs={"class":"form-control",                      "placeholder":"Add a comment..."}))

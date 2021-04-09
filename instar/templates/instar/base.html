@@ -5,43 +5,47 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
 </head>
 
 <body>
 
-    {% include "nav.html" %}
-        {% block content %}
+  {% include "nav.html" %}
+  {% block content %}
 
-        {% endblock%}
+  {% endblock%}
 
 
   {% block scripts %}
   <script>
-  $(document).ready(function(){
-    $(".im").mouseover(function(){
-      $("#overlay").show();
-    }).mouseout(function(){
-      $("#overlay").hide();
+    $(document).ready(function () {
+      $(".im").mouseover(function () {
+        $("#overlay").show();
+      }).mouseout(function () {
+        $("#overlay").hide();
+      });
     });
-  });
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   {% bootstrap_javascript %}
   {% endblock %}
 
-        <style>
-            body{
-                background-color: antiquewhite;
-            }
-        </style>
+  <style>
+    body {
+      background-color: aliceblue;
+      font-family: 'Cookie', cursive;
+      font-size: 28px;
+      padding-bottom: 10px;
+
+    }
+  </style>
 </body>
 
 </html>

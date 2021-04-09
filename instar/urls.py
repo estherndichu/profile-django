@@ -8,7 +8,10 @@ urlpatterns=[
     url("^post/(\d+)", views.post, name="post"),
     url("^like/(\d+)", views.like, name="like"),
     url("^profile/(\d+)", views.profile, name="profile"),
+    url("^userprofile/(\d+)", views.userprofile, name="userprofile"),
     url("^search/", views.search, name="search"),
+    url('unfollow/<to_unfollow>', views.unfollow, name='unfollow'),
+    url('follow/<to_follow>', views.follow, name='follow')
 
 ]
 

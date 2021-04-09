@@ -27,6 +27,20 @@
 
                 <a class="btn btn-sm btn-primary ml-5" href="">Follow</a>
                 {% endif %}
+                <a class="btn btn-sm btn-outline-secondary mr-3" data-toggle="modal" data-target=".bd-example-modal-md"><strong>Edit Profile</strong></a>
+                <div class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-md ">
+                        <div class="modal-content">
+                            <form action="" method="post" novalidate enctype="multipart/form-data" class="mr-4 mt-4 ml-4 mb-4">
+                                {% csrf_token%}
+                                {{ user_form|crispy}}
+                                {{ prof_form|crispy}}
+                                <button type="submit" class="btn btn-primary btn-sm"> Update Profile</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="post-details mt-3 mb-3">
                     <span class="mr-5"><strong>{{user_posts.count}}</strong> Posts</span>
                     <span class="mr-5"> <strong>{{ user.profile.followers.count }}</strong> followers</span>

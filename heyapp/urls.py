@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from instar import views
+from django_registration.backends.one_step.views import RegistrationView
+from django.contrib.auth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('instar.urls')),
+    path('accounts/register/',RegistrationView.as_view(success_url='/accounts/login/'),name='django_registration_register'),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('logout/', views.user_logout, name='user_logout'),
-    path('user_login/',views.user_login,name='user_login'),
+    path('logout/', views.logout_then_login, {"next_page": '/'}),
 ]

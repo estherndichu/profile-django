@@ -1,5 +1,6 @@
 {% extends 'instar/base.html' %}
 {% load bootstrap4 %}
+{%load static%}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -37,33 +38,43 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
 
                     {%for post in posts%}
-                    <div class="card-body mt-20" style="align-items: center;" style="display: flex;">
-                        <img src="{{user.profile.photo.url }}" alt="profile pic" style="border-radius: 60%;" width="40"
-                            height="40" class="img-fluid">
-                        <a href="{%url 'profile' post.profile.id%}" style="color: #333;">
-                            <h5 class="card-title" style="padding-top: 10px; margin-left:10px">
-                                {{post.profile.user.username}}
-                            </h5>
+                    <div class="card mb-4">
+                        <div class="card-body mt-20" style="align-items: center;" style="display: flex;">
+                            {%if profile.photo%}
+                            <img src="{{user.profile.photo.url }}" alt="" width="50" height="50" class="img-fluid">
+                            {%else%}
+                            <img src="{%static 'img/default-profile.png'%}" alt="" width="50" height="50" class="img-fluid">
+                            {%endif%}
+                            <a href="{%url 'profile' post.profile.id%}" style="color: #333;">
+                                <h5 class="card-title" style="padding-top: 10px; margin-left:10px">
+                                    {{post.profile.user.username}}
+                                </h5>
+                            </a>
+                        </div>
+                        <a href="{%url 'post' post.id %}">
+                            <img src="{{post.image.url}}" alt="image" class="img-fluid" style="width: 100%; height: 20%;">
                         </a>
+                        <p>{{post.caption}}</p>
+                        <div class="card-body">
+                            <a href="{%url 'like' post.id%}">
+                                <i class="far fa-heart fa-lg" style="font-size: 30px; margin-right:10px; color:#d82626"></i>
+                            </a>
+                            <a href="{%url 'post' post.id%}">
+                                <i class="far fa-comment fa-lg" style="font-size: 30px;"></i>
+                            </a>
+                        </div>
+                        <p class="card-text ml-4" style="font-weight: bolder;">{{post.likes}} likes</p>
                     </div>
-                    <a href="{%url 'post' post.id %}">
-                        <img src="{{post.image.url}}" alt="image" class="img-fluid" style="width: 100%; height: 20%;">
-                    </a>
-                    <div class="card-body">
-                        <a href="{%url 'like' post.id%}">
-                            <i class="far fa-heart fa-lg" style="font-size: 30px; margin-right:10px; color:#d82626"></i>
-                        </a>
-                    </div>
-                    <p class="card-text ml-4" style="font-weight: bolder;">{{post.likes}} likes</p>
+                    
                     {%endfor%}
 
 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                 </div>
             </div>
         </div>

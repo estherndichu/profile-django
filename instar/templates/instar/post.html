@@ -1,12 +1,21 @@
-{%extends "instar/base.html"%} {%load bootstrap4%} {%block content%}
+{%extends "instar/base.html"%} 
+{% load static %}
+{%load bootstrap4%}
+{% load crispy_forms_tags %}
+
+{%block content%}
 
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <div class="card">
             <div class="card-body" style="display: flex;">
-                <img src="{{user.profile.photo.url }}" alt="profile pic" style="border-radius: 60%;" width="40" height="40"
-                    class="img-fluid">
+                {%if profile.photo%}
+                        <img src="{{user.profile.photo.url }}" alt="" width="50" height="50" class="img-fluid">
+                        {%else%}
+                        <img src="{%static 'img/default-profile.png'%}" alt="" width="50" height="50"
+                            class="img-fluid">
+                        {%endif%}
                 <a href="" style="color: #333;">
                     <h5 class="card-title" style="padding-top: 10px; margin-left:10px">
                         {{post.profile.user.username}}
@@ -22,7 +31,25 @@
             <p class="card-text ml-4" style="font-weight: bolder;">{{post.likes}} likes</p>
             <div class="ml-4 mb-3">
                 <p class="card-text">{{post.caption}}</p>
+
             </div>
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="ml-2"><strong>{{ comment.user.user.username }}</strong> <span class="text-secondary">{{ comment.comment }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+                <hr style="width:96%; margin-top:10%;">
+                <form class="form" action="" method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ comment_form|crispy }}
+                        </div>
+                        <div class="col-md-2 mt-4" >
+                            <button type="submit" class="btn btn-sm btn-outline-primary" style="margin-top:14px; margin-left:-10px">post</button>
+                        </div>
+                    </div>
         </div>
     </div>
     <div class="col-md-3"></div>

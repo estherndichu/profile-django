@@ -9,7 +9,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     photo = CloudinaryField('profile')
     bio = models.CharField(max_length=200, blank=True)
-    followers = models.ManyToManyField(User, related_name="followers", blank=True)
+    name =models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -30,25 +30,29 @@ class Post(models.Model):
     name = models.CharField(max_length=50, blank=True)
     caption = models.CharField(max_length=100, blank=True)
     likes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.name} - {self.caption}"
+
     def save_post(self):
         self.save()
 
     def delete_post(self):
         self.delete()
 
-    def __str__(self):
-        return f"{self.name} - {self.caption}"
+    
 
 class Comment(models.Model):
-    comment = models.CharField(max_length=256)
+    comment = models.TextField(max_length=256)
     post =models.ForeignKey(Post,on_delete=models.CASCADE)
     user = models.ForeignKey(Profile,on_delete= models.CASCADE)
 
     def __str__(self):
-        return self.comment
+        return self.user.name
 
-class Follower(models.Model):
-    follower = models.ForeignKey(Profile,on_delete=models.CASCADE)
+class Follow(models.Model):
+    follower = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='following')
+    followed = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers')
 
     def __str__(self):
         return f'{self.follower} Follow'     
